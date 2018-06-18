@@ -24,7 +24,7 @@ app.get("/", (request, response) => {
 });
 app.listen(process.env.PORT);
 setInterval(() => {
-  http.get(`http://${process.env.NOM_DOMAINE}.glitch.me/`);
+  http.get(`https://hacker-bot.herokuapp.com`);
 }, 28000);
 
 bot.on('ready', function (ready) {
