@@ -204,7 +204,14 @@ bot.on('message', function(message) {
 				break;
 			case 'setlevel':
 				if(args[1] !== undefined && Number(args[1]) > 0){
-					if(message.member.roles.exists('name', 'Fondateur') || message.member.roles.exists('name', 'Technicien') || message.member.roles.exists('name', 'Administrateur')){
+					let member = message.member;
+					if(args[2] !== undefined){
+						if(message.member.roles.exists('name', 'Administrateur Reseau') || message.member.roles.exists('name', 'Moderateur Reseau')){
+							args.shift();
+							member = message.guild.members
+							.filter(function (members) { return  members.user.id == args[2] })
+							.first();
+						}
 					}
 					fs.readFile('users.json', function(err, data) {
 						let users = JSON.parse(data);
@@ -214,16 +221,16 @@ bot.on('message', function(message) {
 							console.log(i)
 							if(message.author.id == users[i].id){
 								users[i].level = args[1]
-								let username = message.author.username;
-								message.member.setNickname(username+ ' (' + args[1] + ')')
-								message.reply("Votre niveau a été mis à jour");
-								boucle =false
+								let username = member.user.username;
+								member.setNickname(username+ ' (' + args[1] + ')')
+								message.channel.send("Votre niveau a été mis à jour");
+								boucle = false;
 							}
 							else if (message.author.id != users[i].id && i == users.length - 1) {
-								users.push({ name: message.author.username, id: message.author.id, level: args[1]}); 
-								message.reply("Votre niveau a bien été sauvagardé.");
-								let username = message.author.username;
-								message.member.setNickname(username + ' (' + args[1] + ')');
+								users.push({ name: member.user.username, id: member.user.id, level: args[1]}); 
+								message.channel.send("Votre niveau a bien été sauvagardé.");
+								let username = member.user.username;
+								member.setNickname(username + ' (' + args[1] + ')');
 								boucle = false;
 							}
 							i++;
