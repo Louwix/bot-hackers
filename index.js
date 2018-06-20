@@ -207,7 +207,6 @@ bot.on('message', function(message) {
 					let member = message.member;
 					if(args[2] !== undefined){
 						if(message.member.roles.exists('name', 'Administrateur Reseau') || message.member.roles.exists('name', 'Moderateur Reseau')){
-							args.shift();
 							member = message.guild.members
 							.filter(function (members) { return  members.user.username == args[2] })
 							.first();
