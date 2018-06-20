@@ -1,24 +1,21 @@
 {
-  "//1": "describes your app and its dependencies",
-  "//2": "https://docs.npmjs.com/files/package.json",
-  "//3": "updating this file will download and update your packages",
   "name": "HackersBot",
   "version": "1.0.0",
-  "description": "What am I about?",
+  "description": "This is a Discord bot for the Discord Hackers",
   "main": "index.js",
   "scripts": {
     "start": "node index.js"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/An-Idiots-Guide/guidebot.git"
+    "url": "git+https://github.com/Louwix/bot-hackers.git"
   },
   "author": "Louwix",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/An-Idiots-Guide/guidebot/issues"
+    "url": "https://github.com/Louwix/bot-hackers/issues"
   },
-  "homepage": "https://github.com/An-Idiots-Guide/guidebot#readme",
+  "homepage": "https://github.com/Louwix/bot-hackers#readme",
   "engines": {
     "node": "8.4.0"
   },
