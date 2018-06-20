@@ -209,7 +209,7 @@ bot.on('message', function(message) {
 						if(message.member.roles.exists('name', 'Administrateur Reseau') || message.member.roles.exists('name', 'Moderateur Reseau')){
 							args.shift();
 							member = message.guild.members
-							.filter(function (members) { return  members.user.id == args[2] })
+							.filter(function (members) { return  members.user.username == args[2] })
 							.first();
 						}
 					}
