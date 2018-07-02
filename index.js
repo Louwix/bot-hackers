@@ -221,13 +221,13 @@ bot.on('message', function(message) {
 							if(message.author.id == users[i].id){
 								users[i].level = args[1]
 								let username = member.user.username;
-								member.setNickname(username+ ' (' + args[1] + ')')
-								message.channel.send("Le niveau de " + username " a été mis à jour à "+ args[1] + ".");
+								member.setNickname(username +' (' + args[1] + ')')
+								message.channel.send("Le niveau de "+ username +" a été mis à jour à "+ args[1] + ".");
 								boucle = false;
 							}
 							else if (message.author.id != users[i].id && i == users.length - 1) {
 								users.push({ name: member.user.username, id: member.user.id, level: args[1]}); 
-								message.channel.send("Le niveau de " + member.user.username + "a bien été sauvagardé à " + args[1] + ".");
+								message.channel.send("Le niveau de " + member.user.username + " a bien été sauvagardé à " + args[1] + ".");
 								let username = member.user.username;
 								member.setNickname(username + ' (' + args[1] + ')');
 								boucle = false;
@@ -253,7 +253,7 @@ bot.on('message', function(message) {
 								users[i].level = level
 								let username = member.user.username;
 								member.setNickname(username+ ' (' + level + ')')
-								message.channel.send("Le niveau de " + username " a été mis à jour à "+ level + ".");
+								message.channel.send("Le niveau de "+ username +" a été mis à jour à "+ level +".");
 								boucle = false;
 							}
 							else if (message.author.id != users[i].id && i == users.length - 1) {
