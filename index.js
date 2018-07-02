@@ -222,12 +222,12 @@ bot.on('message', function(message) {
 								users[i].level = args[1]
 								let username = member.user.username;
 								member.setNickname(username+ ' (' + args[1] + ')')
-								message.channel.send("Votre niveau a été mis à jour");
+								message.channel.send("Le niveau de " + username " a été mis à jour à "+ args[1] + ".");
 								boucle = false;
 							}
 							else if (message.author.id != users[i].id && i == users.length - 1) {
 								users.push({ name: member.user.username, id: member.user.id, level: args[1]}); 
-								message.channel.send("Votre niveau a bien été sauvagardé.");
+								message.channel.send("Le niveau de " + member.user.username + "a bien été sauvagardé à " + args[1] + ".");
 								let username = member.user.username;
 								member.setNickname(username + ' (' + args[1] + ')');
 								boucle = false;
@@ -239,6 +239,31 @@ bot.on('message', function(message) {
 				} else {
 					message.channel.send("Préciser un niveau correct.");
 				}
+				break;
+			case 'uplevel':
+				fs.readFile('users.json', function(err, data) {
+						let users = JSON.parse(data);
+						let boucle = true;
+						let i = 0;
+						while (boucle) {
+							console.log(i)
+							if(message.author.id == users[i].id){
+								let level = Number(users[i].level)
+								level++;
+								users[i].level = level
+								let username = member.user.username;
+								member.setNickname(username+ ' (' + level + ')')
+								message.channel.send("Le niveau de " + username " a été mis à jour à "+ level + ".");
+								boucle = false;
+							}
+							else if (message.author.id != users[i].id && i == users.length - 1) {
+								message.channel.send("Veuillez d'abord définir votre niveau à l'aide de >setlevel [niveau]")
+								boucle = false;
+							}
+							i++;
+						}
+						fs.writeFile('users.json', JSON.stringify(users));  
+					});
 				break;
 			case 'level':
 				var i = 0
@@ -259,6 +284,7 @@ bot.on('message', function(message) {
 					.setTitle("Commandes level")
 					.addField(">level", "Affiche la liste des niveau des joueurs qui ont souhaité définir leur niveau")
 					.addField(">setlevel", "Defini votre niveau et si il est déjà défini il sera mis à jour. Votre niveau est alors enregistré dans un fichier et il apparait dans votre pseudo.")
+					.addField(">uplevel", "Augmente votre niveau de 1 si il est déjà défini")
 					.setColor('GREEN')
 				);
 				message.channel.sendEmbed(new Discord.RichEmbed()
