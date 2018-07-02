@@ -241,6 +241,7 @@ bot.on('message', function(message) {
 				}
 				break;
 			case 'uplevel':
+				let member = message.member;
 				fs.readFile('users.json', function(err, data) {
 						let users = JSON.parse(data);
 						let boucle = true;
