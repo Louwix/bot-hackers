@@ -244,6 +244,10 @@ bot.on('message', function(message) {
 				break;
 			case 'uplevel':
 				let member = message.member;
+				let username = member.user.username;
+				if(member.nickname != undefined){
+					username = member.nickname
+				}
 				fs.readFile('users.json', function(err, data) {
 						let users = JSON.parse(data);
 						let boucle = true;
@@ -254,7 +258,6 @@ bot.on('message', function(message) {
 								let level = Number(users[i].level)
 								level++;
 								users[i].level = level
-								let username = member.user.username;
 								member.setNickname(username+ ' (' + level + ')')
 								message.channel.send("Le niveau de "+ username +" a été mis à jour à "+ level +".");
 								boucle = false;
