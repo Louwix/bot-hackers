@@ -219,6 +219,8 @@ bot.on('message', function(message) {
 						let username = member.user.username;
 						if(member.nickname != undefined){
 							username = member.nickname
+							var pos = username.indexOf("(");
+							username = username.slice(0, pos)
 						}
 						while (boucle) {
 							console.log(i)
@@ -247,6 +249,8 @@ bot.on('message', function(message) {
 				let username = member.user.username;
 				if(member.nickname != undefined){
 					username = member.nickname
+					var pos = username.indexOf("(");
+					username = username.slice(0, pos)
 				}
 				fs.readFile('users.json', function(err, data) {
 						let users = JSON.parse(data);
