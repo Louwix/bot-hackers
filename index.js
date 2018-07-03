@@ -216,11 +216,14 @@ bot.on('message', function(message) {
 						let users = JSON.parse(data);
 						let boucle = true;
 						let i = 0;
+						let username = member.user.username;
+						if(member.nickname != undefined){
+							username = member.nickname
+						}
 						while (boucle) {
 							console.log(i)
 							if(message.author.id == users[i].id){
 								users[i].level = args[1]
-								let username = member.user.username;
 								member.setNickname(username +' (' + args[1] + ')')
 								message.channel.send("Le niveau de "+ username +" a été mis à jour à "+ args[1] + ".");
 								boucle = false;
@@ -228,7 +231,6 @@ bot.on('message', function(message) {
 							else if (message.author.id != users[i].id && i == users.length - 1) {
 								users.push({ name: member.user.username, id: member.user.id, level: args[1]}); 
 								message.channel.send("Le niveau de " + member.user.username + " a bien été sauvagardé à " + args[1] + ".");
-								let username = member.user.username;
 								member.setNickname(username + ' (' + args[1] + ')');
 								boucle = false;
 							}
