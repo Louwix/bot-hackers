@@ -251,10 +251,20 @@ bot.on('message', function(message) {
 				if(member.nickname != undefined){
 					username = member.nickname
 					var pos = username.indexOf("(");
+					var pos2 = username.indexOf(")");
 					pos--;
-					username = username.slice(0, pos)
+					var newUsername = username.slice(0, pos)
+					pos+= 2
+                    var newLevel = username.slice(pos, pos2)
+                    newLevel = Number(newLevel)
+                    newLevel++
+                    console.log(newUsername + " (" + newLevel +")")
+					member.setNickname(newUsername+ ' (' + newLevel + ')')
+					message.channel.send("Le niveau de "+ newUsername +" a été mis à jour à "+ newLevel +".");
+				} else {
+					message.channel.send("Veuillez d'abord définir votre niveau à l'aide de >setlevel [niveau]")
 				}
-				fs.readFile('users.json', function(err, data) {
+				/*fs.readFile('users.json', function(err, data) {
 						let users = JSON.parse(data);
 						let boucle = true;
 						let i = 0;
@@ -275,7 +285,7 @@ bot.on('message', function(message) {
 							i++;
 						}
 						fs.writeFile('users.json', JSON.stringify(users));  
-					});
+					});*/
 				break;
 			case 'level':
 				var i = 0
