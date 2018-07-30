@@ -28,7 +28,8 @@ app.get("/", (request, response) => {
 //Check code update
 app.listen(process.env.PORT);
 setInterval(() => {
-  http.get(`http://hacker-bot.herokuapp.com`);
+	http.get(`http://hacker-bot.herokuapp.com`);
+	http.get(`http://louwixbot.glitch.me`);
 }, 28000);
 
 //No use
