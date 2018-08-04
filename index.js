@@ -349,7 +349,7 @@ bot.on('guildMemberAdd', function(guildMember) {
 		.filter(function (channel) { return  channel.type === 'text'; })
 		.filter(function (name) { return  name.name === 'règles-du-discord'; })
 		.first();
-	textChannelNouveaux.send("Bienvenue à @" + guildMember.id + " sur le serveur Discord Hackers. Je t'invite à lire dès maintenant le salon #règles-du-discord. ("+ guild.memberCount +" membres)")  )
+	textChannelNouveaux.send("Bienvenue à @" + guildMember.id + " sur le serveur Discord Hackers. Je t'invite à lire dès maintenant le salon #règles-du-discord. ("+ guild.memberCount +" membres)")
 })
 //Connection to Discord
 bot.login(process.env.TOKEN)
