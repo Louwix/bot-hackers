@@ -342,14 +342,15 @@ bot.on('guildMemberAdd', function(guildMember) {
 	//Set channel to send message
 	var textChannelNouveaux = guild.channels
 		.filter(function (channel) { return  channel.type === 'text'; })
-		.filter(function (name) { return  name.name === 'coin-admin'; })
+		.filter(function (name) { return  name.name === 'nouveaux'; })
 		//.filter(function (name) { return  name.name === 'nouveaux'; })
 		.first();
 	var textChannelRegles = guild.channels
 		.filter(function (channel) { return  channel.type === 'text'; })
 		.filter(function (name) { return  name.name === 'règles-du-discord'; })
 		.first();
-	textChannelNouveaux.send("Bienvenue à " + guildMember.toString() + " sur le serveur Discord Hackers. Je t'invite à lire dès maintenant le salon "+ textChannelRegles.toString() +". ("+ guild.memberCount +" membres)")
+	textChannelNouveaux.send("Bienvenue à " + guildMember.toString() + " sur le serveur Discord Hackers. Je t'invite à lire dès maintenant le salon "+ textChannelRegles.toString() +". ("+ guild.memberCount +" membres)");
+	guildMember.addRole('405788893598973962');
 })
 //Connection to Discord
 bot.login(process.env.TOKEN)
