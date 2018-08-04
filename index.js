@@ -333,6 +333,24 @@ bot.on('message', function(message) {
 	}
 })
 
+//New member
+bot.on('guildMemberAdd', function(guildMember) {
+	//Set guild to send message
+	let guild = bot.guilds
+		.filter(function (guild) { return guild.name === 'Hackers';})
+		.first();
+	//Set channel to send message
+	var textChannelNouveaux = guild.channels
+		.filter(function (channel) { return  channel.type === 'text'; })
+		.filter(function (name) { return  name.name === 'coin-admin'; })
+		//.filter(function (name) { return  name.name === 'nouveaux'; })
+		.first();
+	var textChannelRegles = guild.channels
+		.filter(function (channel) { return  channel.type === 'text'; })
+		.filter(function (name) { return  name.name === 'règles-du-discord'; })
+		.first();
+	textChannelNouveaux.send("Bienvenue à @" + guildMember.id + " sur le serveur Discord Hackers. Je t'invite à lire dès maintenant le salon #règles-du-discord. ("+ guild.memberCount +" membres)")  )
+})
 //Connection to Discord
 bot.login(process.env.TOKEN)
 
