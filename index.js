@@ -8,6 +8,9 @@ const express = require('express');
 const fs=require('fs');
 const app = express();
 const http = require('http');
+const guild = bot.guilds
+	.filter(function (guild) { return guild.name === 'Hackers';})
+	.first();
 //var data=fs.readFileSync('users.json', 'utf8');
 var args = [];
 var music = false;
@@ -204,46 +207,55 @@ bot.on('message', function(message) {
 				}
 				break;
 			case 'setlevel':
-				if(args[1] !== undefined && Number(args[1]) > 0){
-					let member = message.member;
-					if(args[2] !== undefined){
-						if(message.member.roles.exists('name', 'Administrateur Reseau') || message.member.roles.exists('name', 'Moderateur Reseau')){
-							member = message.guild.members
-							.filter(function (members) { return  members.user.username == args[2] })
-							.first();
+				if(message.channel.name !== "commande-bot"){
+					if(args[1] !== undefined && Number(args[1]) > 0){
+						let member = message.member;
+						if(args[2] !== undefined){
+							if(message.member.roles.exists('name', 'Administrateur Reseau') || message.member.roles.exists('name', 'Moderateur Reseau')){
+								member = message.guild.members
+								.filter(function (members) { return  members.user.username == args[2] })
+								.first();
+							}
 						}
-					}
-					fs.readFile('users.json', function(err, data) {
-						let users = JSON.parse(data);
-						let boucle = true;
-						let i = 0;
-						let username = member.user.username;
-						if(member.nickname != undefined){
-							username = member.nickname
-							var pos = username.indexOf("(");
-							pos--;
+						fs.readFile('users.json', function(err, data) {
+							let users = JSON.parse(data);
+							let boucle = true;
+							let i = 0;
+							let username = member.user.username;
+							if(member.nickname != undefined){
+								username = member.nickname
+								var pos = username.indexOf("(");
+								pos--;
 							username = username.slice(0, pos)
-						}
-						while (boucle) {
-							console.log(i)
-							if(message.author.id == users[i].id){
-								users[i].level = args[1]
-								member.setNickname(username +' (' + args[1] + ')')
-								message.channel.send("Le niveau de "+ username +" a été mis à jour à "+ args[1] + ".");
-								boucle = false;
 							}
-							else if (message.author.id != users[i].id && i == users.length - 1) {
+							while (boucle) {
+								console.log(i)
+								if(message.author.id == users[i].id){
+									users[i].level = args[1]
+									member.setNickname(username +' (' + args[1] + ')')
+									message.channel.send("Le niveau de "+ username +" a été mis à jour à "+ args[1] + ".");
+									boucle = false;
+								}
+								else if (message.author.id != users[i].id && i == users.length - 1) {
 								users.push({ name: member.user.username, id: member.user.id, level: args[1]}); 
-								message.channel.send("Le niveau de " + member.user.username + " a bien été sauvagardé à " + args[1] + ".");
-								member.setNickname(username + ' (' + args[1] + ')');
-								boucle = false;
+									message.channel.send("Le niveau de " + member.user.username + " a bien été sauvagardé à " + args[1] + ".");
+									member.setNickname(username + ' (' + args[1] + ')');
+									boucle = false;
+								}
+								i++;
 							}
-							i++;
-						}
-						fs.writeFile('users.json', JSON.stringify(users));  
-					});
+							fs.writeFile('users.json', JSON.stringify(users));  
+						});
+					} else {
+						message.channel.send("Préciser un niveau correct.");
+					}
 				} else {
-					message.channel.send("Préciser un niveau correct.");
+					const textChannelCommand = guild.channels
+						.filter(function (channel) { return  channel.type === 'text'; })
+						.filter(function (name) { return  name.name === 'commande-bot'; })
+						.first();
+					message.channel.send("Veuillez utiliser cette commande dans le salon " + textChannelCommand.toString() + "");
+					setTimeout(() => { message.channel.bulkDelete(2) }, 10000)
 				}
 				break;
 			case 'uplevel':
@@ -289,18 +301,24 @@ bot.on('message', function(message) {
 					});*/
 				break;
 			case 'level':
-				var i = 0
+				message.channel.send("Disponnible prochainement ! 🔜")
+				/*
 				var embed = new Discord.RichEmbed().setTitle('Liste du niveau des joueurs :');
-				fs.readFile('users.json', function(err, data) {
-					var users = JSON.parse(data);
 					console.log(users.level)
 					while (i < users.length){
 						var member = bot.users.filter(function (client){ return client.id === users[i].id }).first();
 						embed.addField(users[i].name, 'Niveau : ' + users[i].level);
 						i++;
 					}
-					message.channel.send(embed);
-				})
+					message.channel.send(embed);*/
+				break;
+			case 'setbeginning':
+				if(args[1] !== undefined){
+					let date = args[1].split('/')
+					if()
+				} else {
+					message.channel.send("Précisez une date.")
+				}
 				break;
 			case 'help':
 				message.channel.sendEmbed(new Discord.RichEmbed()
@@ -335,17 +353,12 @@ bot.on('message', function(message) {
 
 //New member
 bot.on('guildMemberAdd', function(guildMember) {
-	//Set guild to send message
-	let guild = bot.guilds
-		.filter(function (guild) { return guild.name === 'Hackers';})
-		.first();
 	//Set channel to send message
-	var textChannelNouveaux = guild.channels
+	const textChannelNouveaux = guild.channels
 		.filter(function (channel) { return  channel.type === 'text'; })
 		.filter(function (name) { return  name.name === 'nouveaux'; })
-		//.filter(function (name) { return  name.name === 'nouveaux'; })
 		.first();
-	var textChannelRegles = guild.channels
+	const textChannelRegles = guild.channels
 		.filter(function (channel) { return  channel.type === 'text'; })
 		.filter(function (name) { return  name.name === 'règles-du-discord'; })
 		.first();
