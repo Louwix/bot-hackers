@@ -207,7 +207,7 @@ bot.on('message', function(message) {
 				}
 				break;
 			case 'setlevel':
-				if(message.channel.name !== "commande-bot"){
+				if(message.channel.name == "commande-bot"){
 					if(args[1] !== undefined && Number(args[1]) > 0){
 						let member = message.member;
 						if(args[2] !== undefined){
