@@ -314,10 +314,9 @@ bot.on('message', function(message) {
 				break;
 			case 'setbeginning':
 				if(args[1] !== undefined){
-					let date = args[1].split('/')
-					if()
+					let date = args[1].split('/');
 				} else {
-					message.channel.send("Précisez une date.")
+					message.channel.send("Précisez une date.");
 				}
 				break;
 			case 'help':
