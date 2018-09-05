@@ -8,9 +8,6 @@ const express = require('express');
 const fs=require('fs');
 const app = express();
 const http = require('http');
-const guild = bot.guilds
-	.filter(function (guild) { return guild.name === 'Hackers';})
-	.first();
 //var data=fs.readFileSync('users.json', 'utf8');
 var args = [];
 var music = false;
@@ -250,6 +247,9 @@ bot.on('message', function(message) {
 						message.channel.send("Préciser un niveau correct.");
 					}
 				} else {
+					const guild = bot.guilds
+						.filter(function (guild) { return guild.name === 'Hackers';})
+						.first();
 					const textChannelCommand = guild.channels
 						.filter(function (channel) { return  channel.type === 'text'; })
 						.filter(function (name) { return  name.name === 'commande-bot'; })
@@ -352,6 +352,9 @@ bot.on('message', function(message) {
 
 //New member
 bot.on('guildMemberAdd', function(guildMember) {
+	const guild = bot.guilds
+		.filter(function (guild) { return guild.name === 'Hackers';})
+		.first();
 	//Set channel to send message
 	const textChannelNouveaux = guild.channels
 		.filter(function (channel) { return  channel.type === 'text'; })
